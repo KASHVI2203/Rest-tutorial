@@ -1,0 +1,76 @@
+const express = require('express');
+
+const router = express.Router();
+
+const User = require('../models/User.model')
+
+//  GET BACK ALL THE POSTS
+
+router.get('/', async (req, res) => {
+    try{
+        const getallUser = await User.find();
+        res.json(getallUser);
+    }catch(err){
+        res.json({message:err});
+    }
+    
+})
+
+
+// SUBMITS A POST
+router.post('/', async (req,res)=>{
+    const user = new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    try{
+        const savedPost = await user.save();
+        res.json(savedPost);
+    }catch(err){
+        res.json({message: err});
+    }
+});
+
+
+//SPECIFIC USER
+router.get('/:username', async (req,res)=>{
+    try{
+        const user = await User.find({username: req.params.username});
+        res.json(user);
+    }catch(err){
+        res.json({message: err});
+    }
+});
+
+
+
+//DELETE POST
+
+router.delete('/:userId', async (req,res)=>{
+    try{
+        const removeUser = await User.remove({ _id: req.params.userId});
+        res.json("User deleted");
+    }catch(err){
+        res.json({message: err});
+    }
+});
+
+// UPDATE POST
+
+router.patch('/:postId',async (req,res)=>{
+    try{
+        const updatePost = await Post.updateOne(
+            {_id: req.params.postId},
+            {$set:{title: req.body.title}}
+            );
+        res.json(updatePost) 
+    }catch(err){
+        res.json({message: err});
+    }
+
+});
+
+
+module.exports = router;
