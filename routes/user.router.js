@@ -59,13 +59,13 @@ router.delete('/:userId', async (req,res)=>{
 
 // UPDATE POST
 
-router.patch('/:postId',async (req,res)=>{
+router.patch('/:id',async (req,res)=>{
     try{
-        const updatePost = await Post.updateOne(
-            {_id: req.params.postId},
-            {$set:{title: req.body.title}}
+        const updateUsername= await User.updateOne(
+            {_id: req.params.id},
+            {$set:{username: req.body.username}}
             );
-        res.json(updatePost) 
+        res.json(updateUsername) 
     }catch(err){
         res.json({message: err});
     }
