@@ -12,18 +12,22 @@ app.use(bodyParser.json());
 const userRouter = require('./routes/user.router');
 
 //ROUTES
-app.use('/user', userRouter);
+// app.use('/user', userRouter);
 
 app.get('/',(req,res) => {
     res.send('We are on Home');
 });
 
+app.get('/hello',(req,res)=>{
+    res.send("Hii there")
+})
+
 
 //Connect TO DB
 
-mongoose.connect('mongodb://localhost:27017/ExpressDb',() =>{
-    console.log('Connected to DB!')
-});
+// mongoose.connect('mongodb://localhost:27017/ExpressDb',() =>{
+//     console.log('Connected to DB!')
+// });
 // How to we start listening to the server
 
 app.listen(4000);
